@@ -1,0 +1,13 @@
+.app-header {
+    align-items: center;
+    background: #DE3E65;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 2rem;
+}
+
+.app-header__logo {
+
+    height: px;
+    width: 100px;
+}
