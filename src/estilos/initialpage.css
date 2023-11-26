@@ -47,3 +47,9 @@
 .button_submit {
     margin-left: -25px;
 }
+
+.alert-info {
+    color: #F2F2F2 !important;
+    background-color: #e36887 !important;
+    border-color: #F2F2F2 !important;
+}
