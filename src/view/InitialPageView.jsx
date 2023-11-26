@@ -3,6 +3,7 @@ import Form from 'react-bootstrap/Form';
 import '../estilos/initialpage.css';
 import Button from 'react-bootstrap/Button';
 import Alert from 'react-bootstrap/Alert';
+import Controller from '../controllers/controller'
 
 const localRecursos = 'http://localhost:3001/produto';
 
@@ -15,7 +16,6 @@ export default function InitialPageView() {
         fetch(localRecursos, { method: "GET" })
             .then(resposta => resposta.json())
             .then(dados => {
-                console.log(dados);
                 setFoiCarregado(true);
                 setProdutos(dados);
             },
@@ -57,14 +57,14 @@ export default function InitialPageView() {
                     {produtos.map((prod) => {
                         return (
                             <div>
-                                <Form>
+                                <Form onSubmit={Controller.doSubmit} action="#">
                                     <div className="row form_edit ">
                                         <div className="col-6">
-                                            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                                            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1" >
                                                 <Form.Label>Produto</Form.Label>
-                                                <Form.Select aria-label="Default select example">
-                                                    <option>Selecione um produto</option>
-                                                    <option value="">{prod.nome}</option>
+                                                <Form.Select onChange={Controller.validationSelectProd} required>
+                                                    <option value="">Selecione um produto</option>
+                                                    <option value={prod.id}>{prod.nome}</option>
                                                 </Form.Select>
                                             </Form.Group>
                                         </div>
@@ -76,6 +76,7 @@ export default function InitialPageView() {
                                                     maxLength={prod.quantidade}
                                                     max={prod.quantidade}
                                                     placeholder="Digite uma quantidade"
+                                                    required
                                                 />
                                             </Form.Group>
                                         </div>
@@ -84,18 +85,18 @@ export default function InitialPageView() {
                                         <div className="col-6">
                                             <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
                                                 <Form.Label>Tipo</Form.Label>
-                                                <Form.Select aria-label="Default select example">
-                                                    <option>Selecione um tipo</option>
-                                                    <option value="1">Sólido</option>
-                                                    <option value="2">Gás</option>
-                                                    <option value="3">Líquido</option>
+                                                <Form.Select onChange={Controller.validationTipo} required>
+                                                    <option value="">Selecione um tipo</option>
+                                                    <option value="1">Crítico</option>
+                                                    <option value="2">Grave</option>
+                                                    <option value="3">Tolerável</option>
                                                 </Form.Select>
                                             </Form.Group>
                                         </div>
                                         <div className="col-6">
                                             <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
                                                 <Form.Label>Motivo</Form.Label>
-                                                <Form.Control as="textarea" rows={1} placeholder='Descreva um motivo' />
+                                                <Form.Control required type="textarea" rows={1} placeholder='Descreva um motivo' />
                                             </Form.Group>
                                         </div>
                                     </div>
@@ -103,7 +104,7 @@ export default function InitialPageView() {
                                         <div className="col-11">
                                         </div>
                                         <div className="col-1 button_submit">
-                                            <Button variant="primary">Confirmar</Button>{' '}
+                                            <Button variant="primary" type="submit">Confirmar</Button>{' '}
                                         </div>
                                     </div>
                                 </Form>
