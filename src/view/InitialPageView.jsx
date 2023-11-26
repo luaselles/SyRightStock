@@ -4,10 +4,14 @@ import '../estilos/initialpage.css';
 import Button from 'react-bootstrap/Button';
 import Alert from 'react-bootstrap/Alert';
 import Controller from '../controllers/controller'
+import moment from "moment";
 
 const localRecursos = 'http://localhost:3001/produto';
 
 export default function InitialPageView() {
+
+    // const date = moment().format("YYYY-MM-DD hh:mm:ss");
+    // console.log(date);
 
     const [produtos, setProdutos] = useState([]);
     const [foiCarregado, setFoiCarregado] = useState(false);
@@ -101,7 +105,14 @@ export default function InitialPageView() {
                                         </div>
                                     </div>
                                     <div className="row form_edit">
-                                        <div className="col-11">
+                                        <div className="col-11 p_right">
+                                            <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+                                                <Form.Control
+                                                    type="date"
+                                                    value={moment().format("YYYY-MM-DD")}
+                                                    disabled
+                                                />
+                                            </Form.Group>
                                         </div>
                                         <div className="col-1 button_submit">
                                             <Button variant="primary" type="submit">Confirmar</Button>{' '}

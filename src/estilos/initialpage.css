@@ -53,3 +53,7 @@
     background-color: #e36887 !important;
     border-color: #F2F2F2 !important;
 }
+
+.p_right {
+    padding-right: 30px !important;
+}
