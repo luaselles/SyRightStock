@@ -4,10 +4,10 @@
     display: flex;
     justify-content: space-between;
     padding: 0 2rem;
+    min-height: 60px;
 }
 
 .app-header__logo {
-
-    height: px;
+    height: 40px;
     width: 100px;
 }

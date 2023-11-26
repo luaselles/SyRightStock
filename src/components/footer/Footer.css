@@ -1,7 +1,9 @@
 .app-footer {
-    background: #DE3E65;
-    padding: 16px;
-    text-align: right;
+    background: hsl(345, 71%, 56%);
+    min-height: 50px;
+    bottom: 0px;
+    position: absolute;
+    width: -webkit-fill-available;
 }
 
 .app-footer__message {

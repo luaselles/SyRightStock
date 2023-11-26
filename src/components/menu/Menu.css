@@ -1,5 +1,6 @@
 .app-menu__list {
     display: flex;
+    margin: 0px;
 }
 
 .app-menu__item {
@@ -15,4 +16,10 @@
 
 .app-menu__link:hover {
     text-decoration: underline;
+}
+
+.app-menu__link:hover {
+    color: #F2F2F2;
+    text-decoration: underline;
+    text-decoration: none;
 }

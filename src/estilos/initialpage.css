@@ -1,0 +1,25 @@
+.container {
+    background-color: #474750;
+    padding-right: 25px;
+    padding-left: 25px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border-radius: 4px;
+    color: #F2F2F2;
+}
+
+.header {
+    background-color: #54545f;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+}
+
+.header_descricao {
+    margin-top: 4px;
+    font-size: 11px;
+}
+
+.form_edit {
+    padding: 10px;
+}
