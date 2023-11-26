@@ -16,10 +16,34 @@
 }
 
 .header_descricao {
-    margin-top: 4px;
+    margin-top: 3px;
     font-size: 11px;
 }
 
 .form_edit {
     padding: 10px;
+}
+
+.form-select {
+    color: #F2F2F2 !important;
+    background-color: #54545f !important;
+}
+
+.form-control {
+    color: #F2F2F2 !important;
+    background-color: #54545f !important;
+}
+
+.btn-primary {
+    background-color: #DE3E65 !important;
+    border-color: #DE3E65 !important;
+}
+
+.btn-check:focus+.btn-primary,
+.btn-primary:focus {
+    box-shadow: 0 0 0 0 !important;
+}
+
+.button_submit {
+    margin-left: -25px;
 }
