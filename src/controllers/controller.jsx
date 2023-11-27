@@ -1,17 +1,22 @@
+const localRecursos = 'http://localhost:3001/acerto';
 
 const Controller = {
     doSubmit(e) {
-        console.log("doSubmit()", e)
-        // const formulario = e.currentTarget;
-        // alert(formulario.checkValidity());
-        // if (formulario.checkValidity() === false) {
-        //     e.preventDefault();
-        //     e.stopPropagation();
-        // } else {
-        //     props.onGravar(escoteiro);
-        // }
+        if (e.produto != null && e.quantidade != null && e.tipo != null && e.motivo != null) {
+            Controller.gravarAcerto(e);
+            return;
+        }
+    },
 
-        // setFormValidado(true);
+    gravarAcerto(e) {
+        console.log("gravarAcerto()", JSON.stringify(e));
+        // fetch(localRecursos, {
+        //     method: "POST",
+        //     headers: { 'Content-Type': 'application/json' },
+        //     body: JSON.stringify(e)
+        // })
+        //     .then(resposta => resposta.json())
+
     },
 
     validationSelectProd(e) {
@@ -19,15 +24,16 @@ const Controller = {
             : e.target.setCustomValidity("");
     },
 
-    validationQuantidade(e) { },
+    validationQuantidade(e) {
+    },
 
     validationTipo(e) {
         e.target.value === '' ? e.target.setCustomValidity("Selecione um tipo")
             : e.target.setCustomValidity("");
     },
 
-    validationMotivo(e) { }
-
+    validationMotivo(e) {
+    },
 
 }
 export default Controller;

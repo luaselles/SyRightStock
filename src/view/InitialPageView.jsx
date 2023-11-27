@@ -10,8 +10,11 @@ const localRecursos = 'http://localhost:3001/produto';
 
 export default function InitialPageView() {
 
-    // const date = moment().format("YYYY-MM-DD hh:mm:ss");
-    // console.log(date);
+    const [form, setForm] = useState({ produto: null, quantidade: null, tipo: null, motivo: null, data: moment().format("YYYY-MM-DD") });
+
+    const setInput = (newValue) => {
+        setForm(form => ({ ...form, ...newValue }))
+    }
 
     const [produtos, setProdutos] = useState([]);
     const [foiCarregado, setFoiCarregado] = useState(false);
@@ -61,12 +64,12 @@ export default function InitialPageView() {
                     {produtos.map((prod) => {
                         return (
                             <div>
-                                <Form onSubmit={Controller.doSubmit} action="#">
+                                <Form onSubmit={Controller.doSubmit(form)} action="#">
                                     <div className="row form_edit ">
                                         <div className="col-6">
                                             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1" >
                                                 <Form.Label>Produto</Form.Label>
-                                                <Form.Select onChange={Controller.validationSelectProd} required>
+                                                <Form.Select onChange={e => { setInput({ produto: e.target.value }) }} required name="produto">
                                                     <option value="">Selecione um produto</option>
                                                     <option value={prod.id}>{prod.nome}</option>
                                                 </Form.Select>
@@ -76,6 +79,8 @@ export default function InitialPageView() {
                                             <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
                                                 <Form.Label>Quantidade</Form.Label>
                                                 <Form.Control
+                                                    onChange={e => setInput({ quantidade: e.target.value })}
+                                                    name="quantidade"
                                                     type="number"
                                                     maxLength={prod.quantidade}
                                                     max={prod.quantidade}
@@ -89,7 +94,9 @@ export default function InitialPageView() {
                                         <div className="col-6">
                                             <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
                                                 <Form.Label>Tipo</Form.Label>
-                                                <Form.Select onChange={Controller.validationTipo} required>
+                                                <Form.Select
+                                                    onChange={e => setInput({ tipo: e.target.value })}
+                                                    required name="tipo">
                                                     <option value="">Selecione um tipo</option>
                                                     <option value="1">Crítico</option>
                                                     <option value="2">Grave</option>
@@ -100,7 +107,9 @@ export default function InitialPageView() {
                                         <div className="col-6">
                                             <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
                                                 <Form.Label>Motivo</Form.Label>
-                                                <Form.Control required type="textarea" rows={1} placeholder='Descreva um motivo' />
+                                                <Form.Control
+                                                    onChange={e => setInput({ motivo: e.target.value })}
+                                                    name="motivo" required type="textarea" rows={1} placeholder='Descreva um motivo' />
                                             </Form.Group>
                                         </div>
                                     </div>
@@ -108,6 +117,7 @@ export default function InitialPageView() {
                                         <div className="col-11 p_right">
                                             <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
                                                 <Form.Control
+                                                    name="data"
                                                     type="date"
                                                     value={moment().format("YYYY-MM-DD")}
                                                     disabled
