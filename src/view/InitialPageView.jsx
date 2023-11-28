@@ -10,7 +10,7 @@ const localRecursos = 'http://localhost:3001/produto';
 
 export default function InitialPageView() {
 
-    const [form, setForm] = useState({ produto: null, quantidade: null, tipo: null, motivo: null, data: moment().format("YYYY-MM-DD") });
+    const [form, setForm] = useState({ quantidade: null, tipo: null, motivo: null, data: moment().format("YYYY-MM-DD"), id_produto: null, });
     const [produtos, setProdutos] = useState([]);
     const [foiCarregado, setFoiCarregado] = useState(false);
 
@@ -26,7 +26,7 @@ export default function InitialPageView() {
         e.preventDefault();
         console.log("You clicked submit. - form", form, e);
         Controller.doSubmit(form);
-        setForm({ produto: null, quantidade: null, tipo: null, motivo: null, data: moment().format("YYYY-MM-DD") });
+        setForm({ id_produto: null, quantidade: null, tipo: null, motivo: null, data: moment().format("YYYY-MM-DD") });
         resetForm();
     }
 
@@ -80,7 +80,7 @@ export default function InitialPageView() {
                                         <div className="col-6">
                                             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1" >
                                                 <Form.Label>Produto</Form.Label>
-                                                <Form.Select onChange={e => { setInput({ produto: e.target.value }) }} required name="produto">
+                                                <Form.Select onChange={e => { setInput({ id_produto: e.target.value }) }} required name="produto">
                                                     <option value={null}>Selecione um produto</option>
                                                     <option value={prod.id}>{prod.nome}</option>
                                                 </Form.Select>
@@ -109,9 +109,9 @@ export default function InitialPageView() {
                                                     onChange={e => setInput({ tipo: e.target.value })}
                                                     required name="tipo">
                                                     <option value={null}>Selecione um tipo</option>
-                                                    <option value="1">Crítico</option>
-                                                    <option value="2">Grave</option>
-                                                    <option value="3">Tolerável</option>
+                                                    <option value="Crítico">Crítico</option>
+                                                    <option value="Grave">Grave</option>
+                                                    <option value="Tolerável">Tolerável</option>
                                                 </Form.Select>
                                             </Form.Group>
                                         </div>
@@ -137,7 +137,7 @@ export default function InitialPageView() {
                                         </div>
                                         <div className="col-1 button_submit">
                                             <Button
-                                                disabled={(form.produto === 'Selecione um produto' || form.produto === null)
+                                                disabled={(form.id_produto === 'Selecione um produto' || form.id_produto === null)
                                                     || (form.quantidade === '' || form.quantidade === null) || (form.tipo === 'Selecione um tipo' || form.tipo === null)
                                                     || (form.motivo === '' || form.motivo === null)}
                                                 variant="primary" type="submit">Confirmar</Button>{' '}
