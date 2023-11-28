@@ -10,13 +10,13 @@ const Controller = {
 
     gravarAcerto(e) {
         console.log("gravarAcerto()", JSON.stringify(e));
-        // fetch(localRecursos, {
-        //     method: "POST",
-        //     headers: { 'Content-Type': 'application/json' },
-        //     body: JSON.stringify(e)
-        // })
-        //     .then(resposta => resposta.json())
-
+        fetch(localRecursos, {
+            method: "POST",
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(e)
+        })
+            .then(resposta => resposta.json())
+        console.log("sucess ao gravar");
     },
 
     validationSelectProd(e) {
