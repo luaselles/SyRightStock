@@ -11,13 +11,24 @@ const localRecursos = 'http://localhost:3001/produto';
 export default function InitialPageView() {
 
     const [form, setForm] = useState({ produto: null, quantidade: null, tipo: null, motivo: null, data: moment().format("YYYY-MM-DD") });
-
-    const setInput = (newValue) => {
-        setForm(form => ({ ...form, ...newValue }))
-    }
-
     const [produtos, setProdutos] = useState([]);
     const [foiCarregado, setFoiCarregado] = useState(false);
+
+    const setInput = (newValue) => {
+        setForm(form => ({ ...form, ...newValue }));
+    }
+
+    function resetForm() {
+        document.getElementById("form").reset();
+    }
+
+    function handleSubmit(e) {
+        e.preventDefault();
+        console.log("You clicked submit. - form", form, e);
+        Controller.doSubmit(form);
+        setForm({ produto: null, quantidade: null, tipo: null, motivo: null, data: moment().format("YYYY-MM-DD") });
+        resetForm();
+    }
 
     function buscarProdutos() {
         fetch(localRecursos, { method: "GET" })
@@ -64,13 +75,13 @@ export default function InitialPageView() {
                     {produtos.map((prod) => {
                         return (
                             <div>
-                                <Form onSubmit={Controller.doSubmit(form)} action="#">
+                                <Form onSubmit={handleSubmit} action="#" id="form">
                                     <div className="row form_edit ">
                                         <div className="col-6">
                                             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1" >
                                                 <Form.Label>Produto</Form.Label>
                                                 <Form.Select onChange={e => { setInput({ produto: e.target.value }) }} required name="produto">
-                                                    <option value="">Selecione um produto</option>
+                                                    <option value={null}>Selecione um produto</option>
                                                     <option value={prod.id}>{prod.nome}</option>
                                                 </Form.Select>
                                             </Form.Group>
@@ -97,7 +108,7 @@ export default function InitialPageView() {
                                                 <Form.Select
                                                     onChange={e => setInput({ tipo: e.target.value })}
                                                     required name="tipo">
-                                                    <option value="">Selecione um tipo</option>
+                                                    <option value={null}>Selecione um tipo</option>
                                                     <option value="1">Crítico</option>
                                                     <option value="2">Grave</option>
                                                     <option value="3">Tolerável</option>
@@ -125,7 +136,11 @@ export default function InitialPageView() {
                                             </Form.Group>
                                         </div>
                                         <div className="col-1 button_submit">
-                                            <Button variant="primary" type="submit">Confirmar</Button>{' '}
+                                            <Button
+                                                disabled={(form.produto === 'Selecione um produto' || form.produto === null)
+                                                    || (form.quantidade === '' || form.quantidade === null) || (form.tipo === 'Selecione um tipo' || form.tipo === null)
+                                                    || (form.motivo === '' || form.motivo === null)}
+                                                variant="primary" type="submit">Confirmar</Button>{' '}
                                         </div>
                                     </div>
                                 </Form>
