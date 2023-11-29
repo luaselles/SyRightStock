@@ -50,7 +50,7 @@ export default function PageViewAcertos() {
                 <div>
                     {acertos.map((acerto) => {
                         return (
-                            <div>
+                            <div className="m-2">
                                 <Table striped bordered hover variant="dark">
                                     <thead>
                                         <tr>
