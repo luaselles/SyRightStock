@@ -9,15 +9,29 @@ const Controller = {
     },
 
     gravarAcerto(e) {
-        e.quantidade = parseInt(e.quantidade);
-        e.id_produto = parseInt(e.id_produto);
+        e = { quantidade: parseInt(e.quantidade), tipo: e.tipo, motivo: e.motivo, data: e.data, id_produto: parseInt(e.id_produto) };
+        console.log(e);
         fetch(localRecursos, {
             method: "POST",
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(e)
         })
+            .catch(error => console.log(error))
             .then(resposta => resposta.json())
+        Controller.buscarAcertos();
         // console.log("sucess ao gravar");
+    },
+
+    buscarAcertos() {
+        fetch(localRecursos, { method: "GET" })
+            .then(resposta => resposta.json())
+            .then(dados => {
+                console.log("buscarAcertos", dados);
+            },
+                error => {
+                    // setFoiCarregado(true);
+                    // setErro(error);
+                });
     },
 
     validationSelectProd(e) {
