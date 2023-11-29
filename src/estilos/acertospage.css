@@ -1,0 +1,11 @@
+.table-dark {
+    --bs-table-bg: #de3e65 !important;
+    --bs-table-striped-bg: #54545f !important;
+    --bs-table-striped-color: #fff !important;
+    --bs-table-active-bg: #54545f !important;
+    --bs-table-active-color: #fff !important;
+    --bs-table-hover-bg: #54545f !important;
+    --bs-table-hover-color: #fff !important;
+    color: #fff !important;
+    border-color: #de3e65 !important;
+}

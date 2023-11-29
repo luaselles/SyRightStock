@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import Alert from 'react-bootstrap/Alert';
+import Table from 'react-bootstrap/Table';
+import '../estilos/acertospage.css';
 
 const localRecursos = 'http://localhost:3001/acerto';
 
@@ -48,7 +50,30 @@ export default function PageViewAcertos() {
                 <div>
                     {acertos.map((acerto) => {
                         return (
-                            <div>{acerto}</div>
+                            <div>
+                                <Table striped bordered hover variant="dark">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Quantidade</th>
+                                            <th>Tipo</th>
+                                            <th>Motivo</th>
+                                            <th>Data</th>
+                                            <th>Produto</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>{acerto.id}</td>
+                                            <td>{acerto.quantidade}</td>
+                                            <td>{acerto.tipo}</td>
+                                            <td>{acerto.motivo}</td>
+                                            <td>{acerto.data}</td>
+                                            <td>{acerto.id_produto}</td>
+                                        </tr>
+                                    </tbody>
+                                </Table>
+                            </div>
                         )
                     })}
                 </div>
