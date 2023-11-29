@@ -24,7 +24,6 @@ export default function InitialPageView() {
 
     function handleSubmit(e) {
         e.preventDefault();
-        console.log("You clicked submit. - form", form, e);
         Controller.doSubmit(form);
         setForm({ id_produto: null, quantidade: null, tipo: null, motivo: null, data: moment().format("YYYY-MM-DD") });
         resetForm();
@@ -39,8 +38,6 @@ export default function InitialPageView() {
             },
                 error => {
                     console.log("erro", error);
-                    // setFoiCarregado(true);
-                    // setErro(error);
                 });
     }
 

@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import { PageInitial } from "./view/Paginas"
+import { PageInitial, PageAcertos } from "./view/Paginas"
 import './App.css';
 
 function App() {
@@ -8,6 +8,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route exact path="/" element={<PageInitial />} />
+          <Route exact path="/acertos" element={<PageAcertos />} />
         </Routes>
       </BrowserRouter>
     </div>

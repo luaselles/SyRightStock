@@ -12,8 +12,8 @@ const Menu = () => (
                 </Link>
             </li>
             <li className="app-menu__item">
-                <Link className="app-menu__link" to="/">
-                    Contact
+                <Link className="app-menu__link" to="/acertos">
+                    Acertos
                 </Link>
             </li>
             <li className="app-menu__item">
