@@ -1,11 +1,31 @@
 const localRecursos = 'http://localhost:3001/acerto';
 
 const Controller = {
-    doSubmit(e) {
+    doSubmit(e, prodQuantidadeAtual) {
         if (e.id_produto != null && e.quantidade != null && e.tipo != null && e.motivo != null) {
             Controller.gravarAcerto(e);
+            Controller.alterarQuantidadeProduto(e, prodQuantidadeAtual);
             return;
         }
+    },
+
+    alterarQuantidadeProduto(e, prodQuantidadeAtual) {
+        console.log("prodQuantidadeAtual", prodQuantidadeAtual);
+        const data = { quantidade: parseInt(e.quantidade), id_produto: parseInt(e.id_produto) };
+        // fetch(localRecursos, {
+        //     method: "PUT",
+        //     headers: { 'Content-Type': 'application/json' },
+        //     body: JSON.stringify(escoteiro)
+        // })
+        //     .then(resposta => resposta.json())
+        //     .then(retorno => {
+        //         if (retorno.resultado) {
+        //             console.log('Quantidade atualizada com sucesso!');
+        //         }
+        //         else {
+        //             console.log('Não foi possível atualizar o Quantidade!');
+        //         }
+        //     });
     },
 
     gravarAcerto(e) {

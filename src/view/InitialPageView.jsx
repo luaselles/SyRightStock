@@ -11,6 +11,7 @@ const localRecursos = 'http://localhost:3001/produto';
 export default function InitialPageView() {
 
     const [form, setForm] = useState({ quantidade: null, tipo: null, motivo: null, data: moment().format("YYYY-MM-DD"), id_produto: null, });
+    const [prodQuantidadeAtual, setProdQtdeAtual] = useState({ quantidade: null });
     const [produtos, setProdutos] = useState([]);
     const [foiCarregado, setFoiCarregado] = useState(false);
 
@@ -24,7 +25,7 @@ export default function InitialPageView() {
 
     function handleSubmit(e) {
         e.preventDefault();
-        Controller.doSubmit(form);
+        Controller.doSubmit(form, prodQuantidadeAtual);
         setForm({ id_produto: null, quantidade: null, tipo: null, motivo: null, data: moment().format("YYYY-MM-DD") });
         resetForm();
     }
@@ -43,6 +44,8 @@ export default function InitialPageView() {
 
     useEffect(() => {
         buscarProdutos();
+        const quantidade = produtos.map(p => p.quantidade);
+        setProdQtdeAtual({ quantidade: quantidade })
     }, [produtos]);
 
     if (produtos.length == 0)
