@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import Alert from 'react-bootstrap/Alert';
 import Table from 'react-bootstrap/Table';
 import '../estilos/acertospage.css';
+import Moment from 'react-moment';
+import 'moment-timezone';
 
 const localRecursos = 'http://localhost:3001/acerto';
 
@@ -68,7 +70,11 @@ export default function PageViewAcertos() {
                                             <td>{acerto.quantidade}</td>
                                             <td>{acerto.tipo}</td>
                                             <td>{acerto.motivo}</td>
-                                            <td>{acerto.data}</td>
+                                            <td>
+                                                <Moment format="DD/MM/YYYY">
+                                                    {acerto.data}
+                                                </Moment>
+                                            </td>
                                             <td>{acerto.id_produto}</td>
                                         </tr>
                                     </tbody>

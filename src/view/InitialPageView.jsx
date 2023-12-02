@@ -88,7 +88,7 @@ export default function InitialPageView() {
                                         </div>
                                         <div className="col-6">
                                             <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-                                                <Form.Label>Quantidade</Form.Label>
+                                                <Form.Label>Quantidade {prod.quantidade}</Form.Label>
                                                 <Form.Control
                                                     onChange={e => setInput({ quantidade: e.target.value })}
                                                     name="quantidade"

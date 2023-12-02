@@ -1,4 +1,5 @@
 const localRecursos = 'http://localhost:3001/acerto';
+const localRecursosProd = 'http://localhost:3001/produto';
 
 const Controller = {
     doSubmit(e, prodQuantidadeAtual) {
@@ -10,22 +11,20 @@ const Controller = {
     },
 
     alterarQuantidadeProduto(e, prodQuantidadeAtual) {
-        console.log("prodQuantidadeAtual", prodQuantidadeAtual);
-        const data = { quantidade: parseInt(e.quantidade), id_produto: parseInt(e.id_produto) };
-        // fetch(localRecursos, {
-        //     method: "PUT",
-        //     headers: { 'Content-Type': 'application/json' },
-        //     body: JSON.stringify(escoteiro)
-        // })
-        //     .then(resposta => resposta.json())
-        //     .then(retorno => {
-        //         if (retorno.resultado) {
-        //             console.log('Quantidade atualizada com sucesso!');
-        //         }
-        //         else {
-        //             console.log('Não foi possível atualizar o Quantidade!');
-        //         }
-        //     });
+        const retirada = prodQuantidadeAtual.quantidade[0] - parseInt(e.quantidade);
+        const data = { quantidade: retirada, id: parseInt(e.id_produto) };
+        fetch(localRecursosProd, {
+            method: "PUT",
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        })
+            .then(resposta => resposta.json())
+            .then(retorno => {
+                if (retorno)
+                    console.log('Quantidade atualizada com sucesso!');
+                else
+                    console.log('Não foi possível atualizar o Quantidade!');
+            });
     },
 
     gravarAcerto(e) {
