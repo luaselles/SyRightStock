@@ -15,6 +15,7 @@ export default function InitialPageView(props) {
     const [foiCarregado, setFoiCarregado] = useState(false);
     const [fields, setFields] = useState({ data: moment().format("YYYY-MM-DD") });
     const [errors, setErrors] = useState({});
+    const [disabled, setDisabled] = useState(false);
 
     function handleValidation(fields) {
         const formFields = { ...fields };
@@ -59,6 +60,14 @@ export default function InitialPageView(props) {
             ...fields,
             [field]: value
         })
+
+        // console.log(fields);
+        // if ((fields["id_produto"] != 'Selecione um produto' && fields["id_produto"] != null)
+        //     && (fields["quantidade"] != '' && fields["quantidade"] != null) && (fields["tipo"] != 'Selecione um tipo' && fields["tipo"] != null)
+        //     && (fields["motivo"] != '' && fields["motivo"] != null)) {
+        //     setDisabled(false);
+        //     console.log("bucha");
+        // }
     }
 
     function handleSubmit(e) {
@@ -192,10 +201,8 @@ export default function InitialPageView(props) {
                                             </Form.Group>
                                         </div>
                                         <div className="col-1 button_submit">
-                                            <Button
-                                                disabled={(fields.id_produto === 'Selecione um produto' || fields.id_produto === null)
-                                                    || (fields.quantidade === '' || fields.quantidade === null) || (fields.tipo === 'Selecione um tipo' || fields.tipo === null)
-                                                    || (fields.motivo === '' || fields.motivo === null) || prod.quantidade == 0}
+                                            <Button className="buttonSubmit"
+                                                disabled={disabled}
                                                 variant="primary" type="submit">Confirmar</Button>{' '}
                                         </div>
                                     </div>
