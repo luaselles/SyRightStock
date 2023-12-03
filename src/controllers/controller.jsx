@@ -2,6 +2,7 @@ const localRecursos = 'http://localhost:3001/acerto';
 const localRecursosProd = 'http://localhost:3001/produto';
 
 const Controller = {
+
     doSubmit(e, prodQuantidadeAtual) {
         if (e.id_produto != null && e.quantidade != null && e.tipo != null && e.motivo != null) {
             Controller.gravarAcerto(e);
@@ -20,10 +21,8 @@ const Controller = {
         })
             .then(resposta => resposta.json())
             .then(retorno => {
-                if (retorno)
-                    console.log('Quantidade atualizada com sucesso!');
-                else
-                    console.log('Não foi possível atualizar o Quantidade!');
+                retorno ? console.log('Quantidade atualizada com sucesso!') :
+                    console.log('Não foi possível atualizar o Quantidade!')
             });
     },
 
@@ -37,22 +36,5 @@ const Controller = {
             .catch(error => console.log(error))
             .then(resposta => resposta.json())
     },
-
-    validationSelectProd(e) {
-        e.target.value === '' ? e.target.setCustomValidity("Selecione um produto")
-            : e.target.setCustomValidity("");
-    },
-
-    validationQuantidade(e) {
-    },
-
-    validationTipo(e) {
-        e.target.value === '' ? e.target.setCustomValidity("Selecione um tipo")
-            : e.target.setCustomValidity("");
-    },
-
-    validationMotivo(e) {
-    },
-
 }
 export default Controller;

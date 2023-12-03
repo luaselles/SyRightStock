@@ -57,3 +57,8 @@
 .p_right {
     padding-right: 30px !important;
 }
+
+.invalid {
+    color: red;
+    padding: 4px;
+}

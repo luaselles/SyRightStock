@@ -8,26 +8,67 @@ import moment from "moment";
 
 const localRecursos = 'http://localhost:3001/produto';
 
-export default function InitialPageView() {
+export default function InitialPageView(props) {
 
-    const [form, setForm] = useState({ quantidade: null, tipo: null, motivo: null, data: moment().format("YYYY-MM-DD"), id_produto: null, });
+    // const [form, setForm] = useState({ quantidade: null, tipo: null, motivo: null, data: moment().format("YYYY-MM-DD"), id_produto: null, });
     const [prodQuantidadeAtual, setProdQtdeAtual] = useState({ quantidade: null });
     const [produtos, setProdutos] = useState([]);
     const [foiCarregado, setFoiCarregado] = useState(false);
+    const [fields, setFields] = useState({});
+    const [errors, setErrors] = useState({});
 
-    const setInput = (newValue) => {
-        setForm(form => ({ ...form, ...newValue }));
+    function handleValidation(fields) {
+        const formFields = { ...fields };
+        const formErrors = {};
+        let formIsValid = true;
+
+        //Quantidade
+        if (!formFields["quantidade"] || parseInt(formFields["quantidade"]) === 0) {
+            formIsValid = false;
+            formErrors["quantidade"] = "Digite uma quantidade";
+        }
+        //Produto
+        if (!formFields["id_produto"] || formFields["id_produto"] === "Selecione um produto") {
+            formIsValid = false;
+            formErrors["id_produto"] = "Selecione um produto";
+        }
+        //Tipo
+        if (!formFields["tipo"] || formFields["tipo"] === "Selecione um tipo") {
+            formIsValid = false;
+            formErrors["tipo"] = "Selecione um tipo";
+        }
+        //Motivo
+        if (!formFields["motivo"]) {
+            formIsValid = false;
+            formErrors["motivo"] = "Preencha o motivo";
+        }
+
+        setErrors(formErrors);
+        return formIsValid;
     }
 
     function resetForm() {
         document.getElementById("form").reset();
     }
 
+    const handleChange = (field, value) => {
+        setFields({
+            ...fields,
+            [field]: value
+        })
+    }
+
     function handleSubmit(e) {
         e.preventDefault();
-        Controller.doSubmit(form, prodQuantidadeAtual);
-        setForm({ id_produto: null, quantidade: null, tipo: null, motivo: null, data: moment().format("YYYY-MM-DD") });
-        resetForm();
+        if (handleValidation(fields)) {
+            Controller.doSubmit(fields, prodQuantidadeAtual);
+            // setForm({ id_produto: null, quantidade: null, tipo: null, motivo: null, data: moment().format("YYYY-MM-DD") });
+            resetForm();
+        } else {
+            e.preventDefault();
+            e.stopPropagation();
+            alert("Form has errors.");
+        }
     }
 
     function buscarProdutos() {
@@ -45,7 +86,7 @@ export default function InitialPageView() {
     useEffect(() => {
         buscarProdutos();
         const quantidade = produtos.map(p => p.quantidade);
-        setProdQtdeAtual({ quantidade: quantidade })
+        setProdQtdeAtual({ quantidade: quantidade });
     }, [produtos]);
 
     if (produtos.length == 0)
@@ -57,7 +98,7 @@ export default function InitialPageView() {
                     <p className="mb-0 header_descricao">Identificação e contabilização das mercadorias que estão armazenadas no estoque.</p>
                 </div>
                 <div className="p-2">
-                    <Alert key="info" variant="info">
+                    <Alert variant="info">
                         Não possui produtos a serem listados no momento.
                     </Alert>
                 </div>
@@ -80,17 +121,21 @@ export default function InitialPageView() {
                                         <div className="col-6">
                                             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1" >
                                                 <Form.Label>Produto</Form.Label>
-                                                <Form.Select onChange={e => { setInput({ id_produto: e.target.value }) }} required name="produto">
+                                                <Form.Select
+                                                    onChange={e => handleChange('id_produto', e.target.value)}
+                                                    name="produto">
                                                     <option value={null}>Selecione um produto</option>
                                                     <option value={prod.id}>{prod.nome}</option>
                                                 </Form.Select>
+                                                <span className="invalid">{errors["id_produto"]}</span>
                                             </Form.Group>
                                         </div>
                                         <div className="col-6">
                                             <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
                                                 <Form.Label>Quantidade {prod.quantidade}</Form.Label>
                                                 <Form.Control
-                                                    onChange={e => setInput({ quantidade: e.target.value })}
+                                                    onChange={e => handleChange('quantidade', e.target.value)}
+                                                    // value={fields["quantidade"]}
                                                     name="quantidade"
                                                     type="number"
                                                     maxLength={prod.quantidade}
@@ -98,6 +143,7 @@ export default function InitialPageView() {
                                                     placeholder="Digite uma quantidade"
                                                     required
                                                 />
+                                                <span className="invalid">{errors["quantidade"]}</span>
                                             </Form.Group>
                                         </div>
                                     </div>
@@ -106,21 +152,23 @@ export default function InitialPageView() {
                                             <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
                                                 <Form.Label>Tipo</Form.Label>
                                                 <Form.Select
-                                                    onChange={e => setInput({ tipo: e.target.value })}
+                                                    onChange={e => handleChange('tipo', e.target.value)}
                                                     required name="tipo">
                                                     <option value={null}>Selecione um tipo</option>
                                                     <option value="Crítico">Crítico</option>
                                                     <option value="Grave">Grave</option>
                                                     <option value="Tolerável">Tolerável</option>
                                                 </Form.Select>
+                                                <span className="invalid">{errors["tipo"]}</span>
                                             </Form.Group>
                                         </div>
                                         <div className="col-6">
                                             <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
                                                 <Form.Label>Motivo</Form.Label>
                                                 <Form.Control
-                                                    onChange={e => setInput({ motivo: e.target.value })}
+                                                    onChange={e => handleChange('motivo', e.target.value)} value={fields["motivo"]}
                                                     name="motivo" required type="textarea" rows={1} placeholder='Descreva um motivo' />
+                                                <span className="invalid">{errors["motivo"]}</span>
                                             </Form.Group>
                                         </div>
                                     </div>
@@ -136,10 +184,10 @@ export default function InitialPageView() {
                                             </Form.Group>
                                         </div>
                                         <div className="col-1 button_submit">
-                                            <Button
-                                                disabled={(form.id_produto === 'Selecione um produto' || form.id_produto === null)
+                                            {/*  disabled={(form.id_produto === 'Selecione um produto' || form.id_produto === null)
                                                     || (form.quantidade === '' || form.quantidade === null) || (form.tipo === 'Selecione um tipo' || form.tipo === null)
-                                                    || (form.motivo === '' || form.motivo === null)}
+                                                    || (form.motivo === '' || form.motivo === null)} */}
+                                            <Button
                                                 variant="primary" type="submit">Confirmar</Button>{' '}
                                         </div>
                                     </div>

@@ -7,7 +7,7 @@ import 'moment-timezone';
 
 const localRecursos = 'http://localhost:3001/acerto';
 
-export default function PageViewAcertos() {
+export default function PageViewAcertos(props) {
 
     const [acertos, setAcertos] = useState([]);
 
