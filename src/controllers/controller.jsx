@@ -28,6 +28,7 @@ const Controller = {
 
     gravarAcerto(e) {
         e = { quantidade: parseInt(e.quantidade), tipo: e.tipo, motivo: e.motivo, data: e.data, id_produto: parseInt(e.id_produto) };
+        console.log(e);
         fetch(localRecursos, {
             method: "POST",
             headers: { 'Content-Type': 'application/json' },

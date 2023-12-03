@@ -24,12 +24,21 @@
     padding: 10px;
 }
 
-.form-select {
+.form-select:not(disabled) {
     color: #F2F2F2 !important;
     background-color: #54545f !important;
 }
 
-.form-control {
+.form-select:disabled {
+    background-color: #414146 !important;
+}
+
+.form-control:disabled,
+.form-control:read-only {
+    background-color: #414146 !important;
+}
+
+.form-control:not(disabled) {
     color: #F2F2F2 !important;
     background-color: #54545f !important;
 }

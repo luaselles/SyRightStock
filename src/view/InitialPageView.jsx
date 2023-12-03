@@ -10,11 +10,10 @@ const localRecursos = 'http://localhost:3001/produto';
 
 export default function InitialPageView(props) {
 
-    // const [form, setForm] = useState({ quantidade: null, tipo: null, motivo: null, data: moment().format("YYYY-MM-DD"), id_produto: null, });
     const [prodQuantidadeAtual, setProdQtdeAtual] = useState({ quantidade: null });
     const [produtos, setProdutos] = useState([]);
     const [foiCarregado, setFoiCarregado] = useState(false);
-    const [fields, setFields] = useState({});
+    const [fields, setFields] = useState({ data: moment().format("YYYY-MM-DD") });
     const [errors, setErrors] = useState({});
 
     function handleValidation(fields) {
@@ -23,6 +22,10 @@ export default function InitialPageView(props) {
         let formIsValid = true;
 
         //Quantidade
+        if (parseInt(formFields["quantidade"]) > prodQuantidadeAtual.quantidade) {
+            formIsValid = false;
+            formErrors["quantidade"] = "Digite uma quantidade menor a " + prodQuantidadeAtual.quantidade;
+        }
         if (!formFields["quantidade"] || parseInt(formFields["quantidade"]) === 0) {
             formIsValid = false;
             formErrors["quantidade"] = "Digite uma quantidade";
@@ -62,12 +65,12 @@ export default function InitialPageView(props) {
         e.preventDefault();
         if (handleValidation(fields)) {
             Controller.doSubmit(fields, prodQuantidadeAtual);
-            // setForm({ id_produto: null, quantidade: null, tipo: null, motivo: null, data: moment().format("YYYY-MM-DD") });
+            setFields({ data: moment().format("YYYY-MM-DD") });
             resetForm();
         } else {
             e.preventDefault();
             e.stopPropagation();
-            alert("Form has errors.");
+            alert("Form inválido.");
         }
     }
 
@@ -119,10 +122,11 @@ export default function InitialPageView(props) {
                                 <Form onSubmit={handleSubmit} action="#" id="form">
                                     <div className="row form_edit ">
                                         <div className="col-6">
-                                            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1" >
+                                            <Form.Group className="mb-3" >
                                                 <Form.Label>Produto</Form.Label>
                                                 <Form.Select
                                                     onChange={e => handleChange('id_produto', e.target.value)}
+                                                    disabled={prod.quantidade == 0}
                                                     name="produto">
                                                     <option value={null}>Selecione um produto</option>
                                                     <option value={prod.id}>{prod.nome}</option>
@@ -131,16 +135,18 @@ export default function InitialPageView(props) {
                                             </Form.Group>
                                         </div>
                                         <div className="col-6">
-                                            <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+                                            <Form.Group className="mb-3" >
                                                 <Form.Label>Quantidade {prod.quantidade}</Form.Label>
                                                 <Form.Control
                                                     onChange={e => handleChange('quantidade', e.target.value)}
                                                     // value={fields["quantidade"]}
                                                     name="quantidade"
                                                     type="number"
+                                                    min={1}
                                                     maxLength={prod.quantidade}
                                                     max={prod.quantidade}
-                                                    placeholder="Digite uma quantidade"
+                                                    placeholder={prod.quantidade == 0 ? "Não a produtos disponíveis" : "Digite uma quantidade"}
+                                                    disabled={prod.quantidade == 0}
                                                     required
                                                 />
                                                 <span className="invalid">{errors["quantidade"]}</span>
@@ -149,10 +155,11 @@ export default function InitialPageView(props) {
                                     </div>
                                     <div className="row form_edit">
                                         <div className="col-6">
-                                            <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+                                            <Form.Group className="mb-3" >
                                                 <Form.Label>Tipo</Form.Label>
                                                 <Form.Select
                                                     onChange={e => handleChange('tipo', e.target.value)}
+                                                    disabled={prod.quantidade == 0}
                                                     required name="tipo">
                                                     <option value={null}>Selecione um tipo</option>
                                                     <option value="Crítico">Crítico</option>
@@ -163,9 +170,10 @@ export default function InitialPageView(props) {
                                             </Form.Group>
                                         </div>
                                         <div className="col-6">
-                                            <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+                                            <Form.Group className="mb-3" >
                                                 <Form.Label>Motivo</Form.Label>
                                                 <Form.Control
+                                                    disabled={prod.quantidade == 0}
                                                     onChange={e => handleChange('motivo', e.target.value)} value={fields["motivo"]}
                                                     name="motivo" required type="textarea" rows={1} placeholder='Descreva um motivo' />
                                                 <span className="invalid">{errors["motivo"]}</span>
@@ -174,7 +182,7 @@ export default function InitialPageView(props) {
                                     </div>
                                     <div className="row form_edit">
                                         <div className="col-11 p_right">
-                                            <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+                                            <Form.Group className="mb-3" >
                                                 <Form.Control
                                                     name="data"
                                                     type="date"
@@ -188,6 +196,7 @@ export default function InitialPageView(props) {
                                                     || (form.quantidade === '' || form.quantidade === null) || (form.tipo === 'Selecione um tipo' || form.tipo === null)
                                                     || (form.motivo === '' || form.motivo === null)} */}
                                             <Button
+                                                disabled={prod.quantidade == 0}
                                                 variant="primary" type="submit">Confirmar</Button>{' '}
                                         </div>
                                     </div>
