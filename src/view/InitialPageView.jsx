@@ -145,7 +145,8 @@ export default function InitialPageView(props) {
                                         </div>
                                         <div className="col-6">
                                             <Form.Group className="mb-3" >
-                                                <Form.Label>Quantidade {prod.quantidade}</Form.Label>
+                                                <Form.Label>Quantidade </Form.Label>
+                                                {/* {prod.quantidade} */}
                                                 <Form.Control
                                                     onChange={e => handleChange('quantidade', e.target.value)}
                                                     // value={fields["quantidade"]}
