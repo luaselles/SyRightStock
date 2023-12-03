@@ -192,11 +192,10 @@ export default function InitialPageView(props) {
                                             </Form.Group>
                                         </div>
                                         <div className="col-1 button_submit">
-                                            {/*  disabled={(form.id_produto === 'Selecione um produto' || form.id_produto === null)
-                                                    || (form.quantidade === '' || form.quantidade === null) || (form.tipo === 'Selecione um tipo' || form.tipo === null)
-                                                    || (form.motivo === '' || form.motivo === null)} */}
                                             <Button
-                                                disabled={prod.quantidade == 0}
+                                                disabled={(fields.id_produto === 'Selecione um produto' || fields.id_produto === null)
+                                                    || (fields.quantidade === '' || fields.quantidade === null) || (fields.tipo === 'Selecione um tipo' || fields.tipo === null)
+                                                    || (fields.motivo === '' || fields.motivo === null) || prod.quantidade == 0}
                                                 variant="primary" type="submit">Confirmar</Button>{' '}
                                         </div>
                                     </div>
